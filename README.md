@@ -1,11 +1,11 @@
-## Hola! Bienvenido a la herramienta para la detección rápida de neumonía
+## 🚀🩺 Detección Rápida de Neumonía: IA para Diagnósticos Veloces 🧠✨
+### Repositorio modificado por: Gustavo Adolfo Saavedra
+### Julio 2024
 
 Deep Learning aplicado en el procesamiento de imágenes radiográficas de tórax en formato DICOM con el fin de clasificarlas en 3 categorías diferentes:
 
 1. Neumonía Bacteriana
-
 2. Neumonía Viral
-
 3. Sin Neumonía
 
 Aplicación de una técnica de explicación llamada Grad-CAM para resaltar con un mapa de calor las regiones relevantes de la imagen de entrada.
@@ -16,6 +16,8 @@ Aplicación de una técnica de explicación llamada Grad-CAM para resaltar con u
 
 A continuación le explicaremos cómo empezar a utilizarla.
 
+### Metodo #1: Anaconda
+
 Requerimientos necesarios para el funcionamiento:
 
 - Instale Anaconda para Windows siguiendo las siguientes instrucciones:
@@ -23,17 +25,14 @@ Requerimientos necesarios para el funcionamiento:
 
 - Abra Anaconda Prompt y ejecute las siguientes instrucciones:
 
+  ```bash
   conda create -n tf tensorflow
-
   conda activate tf
-
-  cd UAO-Neumonia
-
+  cd -Direccion de ubicacion del proyecto en su local-
   pip install -r requirements.txt
-
   python detector_neumonia.py
 
-Uso de la Interfaz Gráfica:
+### Uso de la Interfaz Gráfica:
 
 - Ingrese la cédula del paciente en la caja de texto
 - Presione el botón 'Cargar Imagen', seleccione la imagen del explorador de archivos del computador (Imagenes de prueba en https://drive.google.com/drive/folders/1WOuL0wdVC6aojy8IfssHcqZ4Up14dy0g?usp=drive_link)
@@ -73,7 +72,7 @@ Script que recibe el arreglo proveniento de read_img.py, realiza las siguientes 
 
 ## load_model.py
 
-Script que lee el archivo binario del modelo de red neuronal convolucional previamente entrenado llamado 'WilhemNet86.h5'.
+Script que lee el archivo binario del modelo de red neuronal convolucional previamente entrenado llamado 'conv_MLP_84.h5'.
 
 ## grad_cam.py
 
@@ -99,7 +98,47 @@ Es una técnica utilizada para resaltar las regiones de una imagen que son impor
 
 Grad-CAM realiza el cálculo del gradiente de la salida correspondiente a la clase a visualizar con respecto a las neuronas de una cierta capa de la CNN. Esto permite tener información de la importancia de cada neurona en el proceso de decisión de esa clase en particular. Una vez obtenidos estos pesos, se realiza una combinación lineal entre el mapa de activaciones de la capa y los pesos, de esta manera, se captura la importancia del mapa de activaciones para la clase en particular y se ve reflejado en la imagen de entrada como un mapa de calor con intensidades más altas en aquellas regiones relevantes para la red con las que clasificó la imagen en cierta categoría.
 
+## Pruebas Unitarias
+
+Para ejecutar las pruebas unitarias, asegúrate de tener las dependencias instaladas, ejecuta el siguiente comando:
+
+- pip install pytest
+
+Despues podra ejecutar el siguiente comando:
+
+- pytest
+
+## Pruebas contenedor Docker
+
+Para realizar las pruebas con Docker, asegúrate de tener las dependencias instaladas en este caso para Windows son:
+
+- Descargar Xming desde https://sourceforge.net/projects/xming/  
+
+Esta aplicación se estará ejecutando en segundo plano (Verificar desde el administrador de tareas)
+
+Ahora desde el terminal de preferencia ejecuta los siguientes comandos:
+
+-git clone https://github.com/S-loaiza-UAO/Deteccion-Neumonia.git
+
+Desde la ubicacion del repositorio clonado ejecuta:
+
+- docker build -t deteccion-neumonia:latest .
+
+Iniciará el proceso de crear la imagen con la informacion requerida. Finalizado el proceso de creacion ejecuta:
+
+- docker run -it -e DISPLAY=host.docker.internal:0.0 deteccion-neumonia python3 detector_neumonia.py
+
+"deteccion-neumonia" seria el nombre de la imagen creada, en caso de que la imagen creada tenga otro nombre se debe modificar.
+"detector_neumonia.py" seria el nombre de la app de python, en caso de tenerla con un nombre diferente se debe modificar.
+
+En este punto se debe estar ejecutando la aplicación Xming con la interfas grafica de Tkinter y se podra hacer uso del modelo de diagnostico.
+
 ## Proyecto original realizado por:
 
 Isabella Torres Revelo - https://github.com/isa-tr
 Nicolas Diaz Salazar - https://github.com/nicolasdiazsalazar
+
+## Adaptacion académica para entrega de proyecto:
+
+Gustavo Adolfo Saavedra https://github.com/gustavo198saavedra/UAO-Neumonia-Gustavo.git
+Julio del 2024
